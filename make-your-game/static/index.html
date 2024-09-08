@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="/stylesheet/styles.css">
+
+    <style>
+        body {
+            background-image: url('/imgs/background.jpg');
+            background-size: cover;
+            /* Ensures the image covers the entire viewport */
+            height: 100vh;
+            background-position: center;
+            /* Centers the image */
+            background-repeat: no-repeat;
+            /* Prevents the image from repeating */
+            background-attachment: fixed;
+            /* Keeps the image fixed when scrolling */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #spaceship {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('/imgs/spaceship.png');
+            /* Your spaceship image */
+            background-size: cover;
+            bottom: 20px;
+            /* Start at the bottom of the game area */
+            left: 50%;
+            /* Center the spaceship horizontally */
+            transform: translateX(-50%);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="game-area">
+        <div id="spaceship"></div>
+    </div>
+</body>
+
+</html>
