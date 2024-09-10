@@ -1,50 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
-    <link rel="stylesheet" href="/stylesheet/styles.css">
-
     <style>
+        h1 {
+            color: #fff;
+            font-size: 36px;
+            margin: 0; /* Remove default margin */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 20px;
+            margin: 0; /* Remove default margin */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
         body {
             background-image: url('/imgs/background.jpg');
             background-size: cover;
-            /* Ensures the image covers the entire viewport */
             height: 100vh;
             background-position: center;
-            /* Centers the image */
             background-repeat: no-repeat;
-            /* Prevents the image from repeating */
             background-attachment: fixed;
-            /* Keeps the image fixed when scrolling */
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
 
+        .header {
+            display: flex;
+            align-items: center; /* Vertically center the items */
+            justify-content: space-between; /* Space between the title and the lives */
+            padding: 10px; /* Padding around the header */
+            width: 100%;
+            box-sizing: border-box; /* Include padding in total width */
+        }
+
+        .title-container {
+            flex-grow: 1; /* Take up remaining space */
+            text-align: center; /* Center the title */
+            margin-right: 200px;
+        }
+
+        .image-container {
+            display: flex;
+            align-items: center; /* Vertically center images */
+        }
+
+        .lives {
+            width: 50px; /* Set desired width */
+            height: auto; /* Maintain aspect ratio */
+            margin: 0 5px; /* Space between images */
+        }
+
         #spaceship {
             position: absolute;
-            width: 50px;
-            height: 50px;
-            background-image: url('/imgs/spaceship.png');
-            /* Your spaceship image */
+            width: 100px;
+            height: 100px;
             background-size: cover;
             bottom: 20px;
-            /* Start at the bottom of the game area */
             left: 50%;
-            /* Center the spaceship horizontally */
             transform: translateX(-50%);
         }
     </style>
-
 </head>
-
 <body>
-    <div class="game-area">
-        <div id="spaceship"></div>
+    <div class="header">
+        <div class="image-container">
+            <img src="/imgs/full-heart.png" alt="Heart 1" class="lives" id="life1">
+            <img src="/imgs/full-heart.png" alt="Heart 2" class="lives" id="life2">
+            <img src="/imgs/full-heart.png" alt="Heart 3" class="lives" id="life3">
+            <h3>Lives Left:</h3>
+        </div>
+        <div class="title-container">
+            <h1>Space Invaders</h1>
+        </div>
     </div>
+    <div class="game-area">
+        <img src="/imgs/spaceship.png" alt="SpaceShip" id="spaceship">
+    </div>
+    <script src="/script.js"></script>
 </body>
-
 </html>
