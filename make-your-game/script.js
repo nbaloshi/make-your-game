@@ -1,23 +1,71 @@
-//Spaceship movement left and right
+import EnemyChar from "./EnemyChar.js"; // Import the EnemyChar class
+
+const canvas = document.getElementById("game-area");
+const ctx = canvas.getContext("2d");
+canvas.width = 1000;
+canvas.height = 1000;
+
+const spaceshipImage = new Image();
+spaceshipImage.src = "/imgs/spaceship.png";
+
+// Initial spaceship position
+let spaceshipX = canvas.width / 2;
+const spaceshipY = 420;
+const spaceshipWidth = 80;
+const spaceshipHeight = 80;
+const step = 10; // Movement step size
+
+// Instantiate EnemyChar instead of a single enemy
+const enemies = new EnemyChar(canvas);
+
+function game() {
+  // Clear the canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw the grid of enemies
+  enemies.draw(ctx);
+
+  ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY, spaceshipWidth, spaceshipHeight);
+
+  // Continue the game loop
+  requestAnimationFrame(game);
+}
+
+// Handle spaceship movement using the arrow keys
 document.addEventListener("keydown", function (event) {
-  const spaceship = document.getElementById("spaceship");
-  const step = 10; //Number of pixels moved each time arrow key is pressed
-  const gameArea = window.innerWidth; //Width of browser window to set movement limit
-
-  //Gets the current left position of the spaceship and convert it to integer
-  let spaceshipLeft = parseInt(
-    window.getComputedStyle(spaceship).getPropertyValue("left")
-  );
-
+  // Move spaceship left
   if (event.key == "ArrowLeft") {
-    if (spaceshipLeft - spaceship.offsetWidth > 0) { //Makes sure it does't go outside the window browser display from left
-      spaceship.style.left = spaceshipLeft - step + "px"; //Deducting px will move it to the left
+    if (spaceshipX - step >= 0) {
+      spaceshipX -= step;
     }
-  } else if (event.key == "ArrowRight") {
-    if (spaceshipLeft + spaceship.offsetWidth < gameArea) { //Makes sure it does't go outside the window browser display from right
-      spaceship.style.left = spaceshipLeft + step + "px"; //Adding px will move it to the right
+  }
+  // Move spaceship right
+  else if (event.key == "ArrowRight") {
+    if (spaceshipX + spaceshipWidth + step <= canvas.width) {
+      spaceshipX += step;
     }
   }
 });
 
+requestAnimationFrame(game);
 
+// Spaceship movement left and right (no change needed here)
+// document.addEventListener("keydown", function (event) {
+//   const spaceship = document.getElementById("spaceship");
+//   const step = 10; 
+//   const gameArea = window.innerWidth;
+
+//   let spaceshipLeft = parseInt(
+//     window.getComputedStyle(spaceship).getPropertyValue("left")
+//   );
+
+//   if (event.key == "ArrowLeft") {
+//     if (spaceshipLeft - spaceship.offsetWidth > 0) {
+//       spaceship.style.left = spaceshipLeft - step + "px";
+//     }
+//   } else if (event.key == "ArrowRight") {
+//     if (spaceshipLeft + spaceship.offsetWidth < gameArea) {
+//       spaceship.style.left = spaceshipLeft + step + "px";
+//     }
+//   }
+// });
