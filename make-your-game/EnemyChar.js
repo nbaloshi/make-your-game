@@ -1,18 +1,12 @@
 import Enemy from "./Enemy.js";
 export default class EnemyChar {
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.createEnemies();
+  constructor() {
   }
 
-  draw(ctx) {
-    this.drawEnemies(ctx);
+  draw() {
   }
 
-  drawEnemies(ctx) {
-    this.enemyRows.flat().forEach((enemy) => {
-      enemy.draw(ctx);
-    });
+  drawEnemies() {
   }
 
   enemyRows = [];
@@ -32,24 +26,24 @@ export default class EnemyChar {
     }
 }
 
-  // createEnemies() {
-  //   this.enemyMap.forEach((row, rowIndex) => {
-  //     this.enemyRows[rowIndex] = [];
-  //     row.forEach((enemyIndex) => {
-  //       this.enemyRows[rowIndex].push(
-  //         new Enemy(enemyIndex * 50, rowIndex * 35)
-  //       );
-  //     });
-  //   });
-  // }
+//   createEnemies() {
+//     this.enemyMap.forEach((row, rowIndex) => {
+//       this.enemyRows[rowIndex] = [];
+//       row.forEach((enemyIndex) => {
+//         this.enemyRows[rowIndex].push(
+//           new Enemy(enemyIndex * 50, rowIndex * 35)
+//         );
+//       });
+//     });
+//   }
 
-  //   createEnemies() {
-  //     for (let row = 0; row < rows; row++) {
-  //       this.enemyRows= []; // Initialize the row in enemyRows
-  //       for (let col = 0; col < cols; col++) {
-  //         // Draw the enemy at the calculated position
-  //         this.enemyRows[row].push(new Enemy(col * 50, row * 35));
-  //       }
-  //     }
-  //   }
+//     createEnemies() {
+//       for (let row = 0; row < rows; row++) {
+//         this.enemyRows= []; // Initialize the row in enemyRows
+//         for (let col = 0; col < cols; col++) {
+//           // Draw the enemy at the calculated position
+//           this.enemyRows[row].push(new Enemy(col * 50, row * 35));
+//         }
+//       }
+//     }
 }
