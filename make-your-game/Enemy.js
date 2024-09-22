@@ -7,6 +7,7 @@ export default class Enemy {
         this.image = new Image()
         this.image.src = "/imgs/enemy.png"
     }
+    
 
     draw(ctx){
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
