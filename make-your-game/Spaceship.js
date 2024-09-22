@@ -13,16 +13,12 @@ export default class Spaceship {
     document.addEventListener("keydown", this.move.bind(this));
   }
 
-  draw(ctx) {
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-  }
-
-  move(event) {
-    // Move spaceship left
-    if (event.key === "ArrowLeft") {
-      if (this.x - this.step >= 0) {
-        this.x -= this.step;
-      }
+  moveLeft() {
+    let spaceshipLeft = parseInt(
+      window.getComputedStyle(this.spaceship).getPropertyValue("left")
+    );
+    if (spaceshipLeft - this.step - this.spaceship.offsetWidth> 0) {
+      this.spaceship.style.left = spaceshipLeft - this.step + "px";
     }
     // Move spaceship right
     else if (event.key === "ArrowRight") {

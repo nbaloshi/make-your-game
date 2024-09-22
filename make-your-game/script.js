@@ -1,5 +1,5 @@
-import EnemyChar from "./EnemyChar.js"; // Import the EnemyChar class
-import Spaceship from "./Spaceship.js";
+import EnemyChar from "./EnemyCntrl.js";
+import Spacehip from "./Spaceship.js";
 
 const canvas = document.getElementById("game-area");
 const ctx = canvas.getContext("2d");
