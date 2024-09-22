@@ -9,7 +9,7 @@ export default class Spaceship {
     let spaceshipLeft = parseInt(
       window.getComputedStyle(this.spaceship).getPropertyValue("left")
     );
-    if (spaceshipLeft - this.step > 0) {
+    if (spaceshipLeft - this.step - this.spaceship.offsetWidth> 0) {
       this.spaceship.style.left = spaceshipLeft - this.step + "px";
     }
   }

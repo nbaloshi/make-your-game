@@ -1,4 +1,4 @@
-import EnemyChar from "./EnemyChar.js";
+import EnemyChar from "./EnemyCntrl.js";
 import Spacehip from "./Spaceship.js";
 
 const spaceshipImage = new Image();
