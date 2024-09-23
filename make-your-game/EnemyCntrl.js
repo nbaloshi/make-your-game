@@ -20,6 +20,13 @@ createEnemies() {
             enemy.draw();  // Draw the enemy on the page
         }
     }
+
+    // this.moveEnemies()
 }
+
+// moveEnemies() {
+//     const screenWidth =  window.innerWidth
+//     const 
+// }
 
 }
