@@ -16,13 +16,11 @@ export default class Enemy {
     document.body.appendChild(this.enemyElement);  // Append to the document
   }
 
+
   // Function to update the enemy's position on the screen
   updatePosition() {
     this.enemyElement.style.left = this.x + "px";
     this.enemyElement.style.top = this.y + "px";
   }
 
-  draw() {
-    // Drawing logic handled in the constructor for now
-  }
 }

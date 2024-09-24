@@ -15,9 +15,7 @@ const step = 10; // Movement step size
 
 
 function game() {
-
-  enemies.createEnemies()
-  // Continue the game loop
+  enemies.updateEnemyPositions()
   requestAnimationFrame(game);
 }
 
