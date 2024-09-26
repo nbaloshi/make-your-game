@@ -4,3 +4,9 @@ body {
     background-position: center;  /* Centers the image */
     background-repeat: no-repeat;  /* Prevents the image from repeating */
 }
+
+.grid {
+    width: 600px;
+    height: 600px;
+    border: solid 1px black;
+}
