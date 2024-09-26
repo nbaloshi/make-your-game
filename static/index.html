@@ -1,101 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../stylesheet/style.css">
     <title>Space Invaders</title>
-    <style>
-        h1 {
-            color: #fff;
-            font-size: 36px;
-            margin: 0; /* Remove default margin */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            /* font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
-            font-family:"Pixelify Sans", sans-serif;
-        }
+    <meta charset="UTF-8">
 
-        h3 {
-            color: #fff;
-            font-size: 20px;
-            margin: 0; /* Remove default margin */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            /* font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
-            font-family:"Pixelify Sans", sans-serif;
-        }
-
-        body {
-            background-image: url('../imgs/background.gif');
-            background-size: cover;
-            height: 100vh;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .header {
-            display: flex;
-            align-items: center; /* Vertically center the items */
-            justify-content: space-between; /* Space between the title and the lives */
-            padding: 10px; /* Padding around the header */
-            width: 100%;
-            box-sizing: border-box; /* Include padding in total width */
-            margin-bottom: 10px;
-        }
-
-        .title-container {
-            flex-grow: 1; /* Take up remaining space */
-            text-align: center; /* Center the title */
-            margin-right: 200px;
-        }
-
-        .image-container {
-            display: flex;
-            align-items: center; /* Vertically center images */
-        }
-
-        .lives {
-            width: 50px; /* Set desired width */
-            height: auto; /* Maintain aspect ratio */
-            margin: 0 5px; /* Space between images */
-        }
-
-        #spaceship {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background-size: cover;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-    </style>
 </head>
 <body>
-    <div class="header">
-        <div class="image-container">
-            <img src="../imgs/full-heart.png" alt="Heart 1" class="lives" id="life1">
-            <img src="../imgs/full-heart.png" alt="Heart 2" class="lives" id="life2">
-            <img src="../imgs/full-heart.png" alt="Heart 3" class="lives" id="life3">
-            <h3>Lives Left:</h3>
-        </div>
-        <div class="title-container">
-            <h1>Space Invaders</h1>
-        </div>
-    </div>
-    <div id="game-area" class = "grid">
-        <img src="../imgs/spaceship.png" alt="SpaceShip" id="spaceship">
-    </div>
-    <script type="module" src="../script.js"></script>
+    <h1 class="results">0</h1>
+    <div  class = "grid"></div>
+    <script src="../script.js"></script>
 </body>
 </html>

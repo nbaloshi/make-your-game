@@ -1,12 +1,32 @@
-body {
-    background-image: url('/background.jpg');
-    background-size: cover;  /* Ensures the image covers the entire background */
-    background-position: center;  /* Centers the image */
-    background-repeat: no-repeat;  /* Prevents the image from repeating */
-}
-
 .grid {
     width: 600px;
     height: 600px;
     border: solid 1px black;
+    display: flex; /*Squeeze all the div boxes in the first line */
+    flex-wrap: wrap; /*wrap the divs so it starts a new line*/
+}
+
+.grid div {
+    width: 40px;
+    height: 40px;
+    /* The code below was just for testing - to see the divs inside the grid */
+    /* border: solid 1px red;
+    box-sizing: border-box; */
+}
+
+.invader {
+    background-color: purple;
+    border-radius: 20px; /*round it */
+}
+
+.shooter {
+    background-color: green;
+}
+
+.laser{
+    background-color: orange;
+}
+
+.boom{
+    background-color: red;
 }
