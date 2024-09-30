@@ -161,8 +161,6 @@ function shoot(e){
     // Assign and clear so that the laser should be removed after being shot 
     laserId = setInterval(moveLaser, 100);
   }
-
-
 }
 
 document.addEventListener("keydown", shoot);
