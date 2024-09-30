@@ -4,10 +4,100 @@ const resultDisplay = document.querySelector(".results");
 const width = 15;
 const aliensRemoved=[] //invadors that have been shot
 let currentShooterIndex = 202
-let invadersID
+// let invadersID
 let isGoingRight = true
 let direction = 1
 let results = 0
+
+let lastMoveTime = 0;
+const moveInterval = 600;
+
+// Menu Related
+let isPaused = false;
+let gameRequestId; // To store the requestAnimationFrame ID
+
+const menu = document.getElementById("menu");
+const resumeButton = document.getElementById("resumeButton");
+const restartButton = document.getElementById("restartButton");
+
+// Menu Related 
+resumeButton.addEventListener("click", () => {
+  menu.classList.add("hidden");
+  isPaused = false;
+  requestAnimationFrame(gameLoop); // Resume the game loop
+});
+
+restartButton.addEventListener("click", restartGame);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    // Toggle pause and show/hide menu
+    if (isPaused) {
+      menu.classList.add("hidden");
+      isPaused = false;
+      requestAnimationFrame(gameLoop); // Resume the game
+    } else {
+      menu.classList.remove("hidden");
+      isPaused = true;
+    }
+  }
+});
+
+// Only move the invaders if enough time has passed
+function gameLoop(timestamp) {
+  if (isPaused) return; // Stop the game loop if paused
+
+  // Check if enough time has passed since the last move
+  if (timestamp - lastMoveTime > moveInterval) {
+    // If true update the position of the aliens
+    moveInvaders();
+    lastMoveTime = timestamp;
+  }
+
+  if (timestamp - lastMoveTime > moveInterval) {
+    moveInvaders();
+    lastMoveTime = timestamp;
+  }
+
+  // Request the next frame
+  gameRequestId = requestAnimationFrame(gameLoop);  
+}
+
+// Restart the game
+function restartGame() {
+  // Reset all game-related variables and UI elements
+  aliensRemoved.length = 0;
+  currentShooterIndex = 202;
+  results = 0;
+  resultDisplay.innerHTML = results;
+  isGoingRight = true;
+  direction = 1;
+
+  // Reset the alien positions to their initial starting positions
+  alienInvaders.length = 0; // Clear the array
+  alienInvaders.push(
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+    30, 31, 32, 33, 34, 35, 36, 37, 38, 39
+  );
+
+  // Clear aliens and shooter from the grid
+  squares.forEach((square) => {
+    square.classList.remove("invader", "shooter", "laser", "boom");
+  }); 
+
+  draw();
+
+  squares[currentShooterIndex].classList.add("shooter");
+
+  // Hide menu and start the game loop again
+  menu.classList.add("hidden");
+  isPaused = false;
+  requestAnimationFrame(gameLoop);
+}
+
+// Start the game loop
+requestAnimationFrame(gameLoop);
 
 // Create the grid and add the squares
 for (let i=0; i<width*width; i++) {
@@ -50,7 +140,6 @@ function moveShooter(e){
   switch(e.key){
     case 'ArrowLeft':
       if (currentShooterIndex % width !== 0){
-        // console.log("left");
         currentShooterIndex -= 1;
       }
       break;
@@ -81,7 +170,6 @@ function moveInvaders(){
       direction = -1;
       isGoingRight = false;
     }
-
   }
 
   // When they keep going left, they hit the left edge
@@ -121,9 +209,8 @@ function moveInvaders(){
 }
 
 // set an interval to move the aliens every 600ms
-invadersID = setInterval(moveInvaders, 600);
+// invadersID = setInterval(moveInvaders, 600);
 
-// 
 function shoot(e){
   let laserId
   let currentLaserIndex = currentShooterIndex
@@ -133,6 +220,8 @@ function shoot(e){
     squares[currentLaserIndex].classList.remove("laser");
     // Move the laser
     currentLaserIndex -= width;
+    // Stop if the laser goes out of bounds
+    if (currentLaserIndex < 0) return;
     // Add the laser
     squares[currentLaserIndex].classList.add("laser");
 
@@ -153,13 +242,18 @@ function shoot(e){
       aliensRemoved.push(alienRemoved)
       results++
       resultDisplay.innerHTML = results
-      console.log(aliensRemoved)
+
+      return
+      // console.log(aliensRemoved)
     }
+    // Continue moving the laser in the next frame
+    requestAnimationFrame(moveLaser);
   }
 
   if (e.key == 'ArrowUp') {
     // Assign and clear so that the laser should be removed after being shot 
-    laserId = setInterval(moveLaser, 100);
+    // laserId = setInterval(moveLaser, 100);
+    requestAnimationFrame(moveLaser);
   }
 }
 
