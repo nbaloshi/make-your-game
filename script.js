@@ -20,14 +20,56 @@ const menu = document.getElementById("menu");
 const resumeButton = document.getElementById("resumeButton");
 const restartButton = document.getElementById("restartButton");
 
+// Timer Related 
+let timer;
+let secondsElapsed = 0;
+const timerDisplay = document.getElementById("timer");
+
+// Lives Related
+let lives = 3; // Initial number of lives
+const livesDisplay = document.getElementById("lives");
+
+// Lives Related
+
+// Function to update the lives display
+function updateLives() {
+  livesDisplay.innerHTML = lives;
+}
+
+// Start by displaying the initial lives count
+updateLives();
+
+// Timer Related 
+function startTimer() {
+  timer = setInterval(() => {
+    secondsElapsed++;
+    timerDisplay.innerHTML = secondsElapsed;
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timer);
+}
+
+function resetTimer() {
+  clearInterval(timer);
+  secondsElapsed = 0;
+  timerDisplay.innerHTML = secondsElapsed;
+}
+
 // Menu Related 
 resumeButton.addEventListener("click", () => {
   menu.classList.add("hidden");
   isPaused = false;
   requestAnimationFrame(gameLoop); // Resume the game loop
+  startTimer(); // Start/resume the timer
 });
 
-restartButton.addEventListener("click", restartGame);
+restartButton.addEventListener("click", () => {
+  restartGame();
+  resetTimer(); // Reset the timer when restarting the game
+  startTimer(); // Start the timer again
+});
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
@@ -36,9 +78,11 @@ document.addEventListener("keydown", (e) => {
       menu.classList.add("hidden");
       isPaused = false;
       requestAnimationFrame(gameLoop); // Resume the game
+      startTimer(); // Resume the timer
     } else {
       menu.classList.remove("hidden");
       isPaused = true;
+      stopTimer(); // Pause the timer
     }
   }
 });
@@ -72,6 +116,8 @@ function restartGame() {
   resultDisplay.innerHTML = results;
   isGoingRight = true;
   direction = 1;
+  lives = 3; // Reset lives to 3
+  updateLives(); // Update lives display
 
   // Reset the alien positions to their initial starting positions
   alienInvaders.length = 0; // Clear the array
@@ -93,8 +139,12 @@ function restartGame() {
   // Hide menu and start the game loop again
   menu.classList.add("hidden");
   isPaused = false;
+  resetTimer();
+  startTimer();
   requestAnimationFrame(gameLoop);
 }
+
+startTimer();
 
 // Start the game loop
 requestAnimationFrame(gameLoop);
@@ -194,19 +244,29 @@ function moveInvaders(){
 
   // Check if the shooter and invader are on top of each other
   if (squares[currentShooterIndex].classList.contains("invader")){
-    console.log("You lose!");
+    lives--; // Decrease lives by 1
+    updateLives(); // Update lives display
+
+    if (lives === 0) {
     resultDisplay.innerHTML = 'GAME OVER';
+    stopTimer();
     clearInterval(invadersID);
     // Remove the shooter
+    return
+    }
   }
 
   if (aliensRemoved.length === alienInvaders.length){
     console.log("You win!");
     resultDisplay.innerHTML = 'YOU WIN';
+    stopTimer();
     clearInterval(invadersID);
+    return
   }
-
 }
+
+// Start by displaying the initial lives count
+updateLives();
 
 // set an interval to move the aliens every 600ms
 // invadersID = setInterval(moveInvaders, 600);

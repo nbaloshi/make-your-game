@@ -17,3 +17,8 @@ than using setInterval because it allows the browser to
 optimize the timing of updates, especially when the tab is 
 not active or the device is struggling to keep up with the 
 frame rate.
+
+
+- Time wont stop when you win or loose 
+- Aliens wont move in space of dead alien 
+- menu doesnt show only accessed by esc key
