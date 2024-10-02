@@ -42,8 +42,14 @@
     padding: 20px;
     border-radius: 10px;
     z-index: 1000;
-  }
+}
 
-  .hidden {
+.hidden {
     display: none;
+}
+
+.alien-laser {
+    background-color: red; /* Color for the alien laser */
+    height: 10px; /* Adjust size as needed */
+    width: 100%; /* Fit the grid square */
   }

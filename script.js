@@ -4,6 +4,9 @@ const resultDisplay = document.querySelector(".results");
 const width = 15;
 const aliensRemoved=[] //invadors that have been shot
 let currentShooterIndex = 202
+
+let isGameOver = false; // New flag to track if the game has ended
+
 // let invadersID
 let isGoingRight = true
 let direction = 1
@@ -186,6 +189,7 @@ function remove(){
 }
 
 function moveShooter(e){
+  if (isGameOver) return; // Stop the game loop if the game is over
   squares[currentShooterIndex].classList.remove("shooter")
   switch(e.key){
     case 'ArrowLeft':
@@ -206,6 +210,7 @@ function moveShooter(e){
 document.addEventListener("keydown", moveShooter);
 
 function moveInvaders(){
+  if (isGameOver) return; // Stop the game loop if the game is over
   const leftEdge = alienInvaders[0] % width == 0;
   const rightEdge = alienInvaders[alienInvaders.length-1] % width === width-1;
 
@@ -250,7 +255,9 @@ function moveInvaders(){
     if (lives === 0) {
     resultDisplay.innerHTML = 'GAME OVER';
     stopTimer();
-    clearInterval(invadersID);
+    isGameOver = true;
+    removeListeners();
+    // clearInterval(invadersID);
     // Remove the shooter
     return
     }
@@ -260,9 +267,16 @@ function moveInvaders(){
     console.log("You win!");
     resultDisplay.innerHTML = 'YOU WIN';
     stopTimer();
-    clearInterval(invadersID);
+    isGameOver = true;
+    removeListeners();
+    // clearInterval(invadersID);
     return
   }
+}
+
+function removeEventListeners() {
+  document.removeEventListener("keydown", moveShooter);
+  document.removeEventListener("keydown", shoot);
 }
 
 // Start by displaying the initial lives count
@@ -272,6 +286,9 @@ updateLives();
 // invadersID = setInterval(moveInvaders, 600);
 
 function shoot(e){
+
+  if (isGameOver) return; // Stop the game loop if the game is over
+
   let laserId
   let currentLaserIndex = currentShooterIndex
 
@@ -317,4 +334,60 @@ function shoot(e){
   }
 }
 
+document.addEventListener("keydown", moveShooter);
 document.addEventListener("keydown", shoot);
+
+// Function to start alien shooting
+function startAlienShooting() {
+  setInterval(() => {
+    if (isPaused || isGameOver) return; // Stop shooting if paused or game over
+
+    const shootingAlienIndex = alienInvaders[Math.floor(Math.random() * alienInvaders.length)];
+    if (!aliensRemoved.includes(alienInvaders.indexOf(shootingAlienIndex))) {
+      alienShoot(shootingAlienIndex);
+    }
+  }, 1000); // Aliens will try to shoot every second
+}
+
+function alienShoot(startIndex) {
+  let currentLaserIndex = startIndex;
+
+  function moveLaser() {
+    // Remove the laser from the current position
+    squares[currentLaserIndex].classList.remove("alien-laser");
+    // Move the laser down
+    currentLaserIndex += width;
+
+    // Stop if the laser goes out of bounds
+    if (currentLaserIndex >= width * width) return;
+
+    // Add the laser to the new position
+    squares[currentLaserIndex].classList.add("alien-laser");
+
+    // Check if the laser hits the shooter
+    if (squares[currentLaserIndex].classList.contains("shooter")) {
+      squares[currentLaserIndex].classList.remove("alien-laser");
+      lives--; // Decrease lives by 1
+      updateLives(); // Update lives display
+
+      if (lives === 0) {
+        resultDisplay.innerHTML = 'GAME OVER';
+        stopTimer();
+        isGameOver = true; // Set the game over flag
+        removeEventListeners(); // Remove event listeners
+      }
+      return;
+    }
+
+    // Continue moving the laser if the game is not over
+    if (!isGameOver) {
+      requestAnimationFrame(moveLaser);
+    }
+  }
+
+  // Start moving the alien laser
+  requestAnimationFrame(moveLaser);
+}
+
+// Start alien shooting after starting the game loop
+startAlienShooting();
