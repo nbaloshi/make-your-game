@@ -19,5 +19,6 @@ not active or the device is struggling to keep up with the
 frame rate.
 
 
-- let aliens shoot
+- increase difficulty by adding alien shooters
 - adjust size based on screen
+- aliens move under shooter

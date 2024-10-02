@@ -1,8 +1,15 @@
+// Difficulty
+let alienShootDelay = 1000;
+let numberOfShootingAliens = 1; 
+
 // Query selector will get the first element it finds with the class grid
 const grid = document.querySelector(".grid");
 const resultDisplay = document.querySelector(".results");
+
 const width = 15;
+
 const aliensRemoved=[] //invadors that have been shot
+
 let currentShooterIndex = 202
 
 let isGameOver = false; // New flag to track if the game has ended
@@ -47,6 +54,11 @@ function startTimer() {
   timer = setInterval(() => {
     secondsElapsed++;
     timerDisplay.innerHTML = secondsElapsed;
+    if (secondsElapsed%5 === 0) {
+      alienShootDelay += 10
+    } else if (secondsElapsed%10 === 0) {
+      numberOfShootingAliens += 1
+    }
   }, 1000);
 }
 
@@ -346,48 +358,70 @@ function startAlienShooting() {
     if (!aliensRemoved.includes(alienInvaders.indexOf(shootingAlienIndex))) {
       alienShoot(shootingAlienIndex);
     }
-  }, 1000); // Aliens will try to shoot every second
-}
-
-function alienShoot(startIndex) {
-  let currentLaserIndex = startIndex;
-
-  function moveLaser() {
-    // Remove the laser from the current position
-    squares[currentLaserIndex].classList.remove("alien-laser");
-    // Move the laser down
-    currentLaserIndex += width;
-
-    // Stop if the laser goes out of bounds
-    if (currentLaserIndex >= width * width) return;
-
-    // Add the laser to the new position
-    squares[currentLaserIndex].classList.add("alien-laser");
-
-    // Check if the laser hits the shooter
-    if (squares[currentLaserIndex].classList.contains("shooter")) {
-      squares[currentLaserIndex].classList.remove("alien-laser");
-      lives--; // Decrease lives by 1
-      updateLives(); // Update lives display
-
-      if (lives === 0) {
-        resultDisplay.innerHTML = 'GAME OVER';
-        stopTimer();
-        isGameOver = true; // Set the game over flag
-        removeEventListeners(); // Remove event listeners
-      }
-      return;
-    }
-
-    // Continue moving the laser if the game is not over
-    if (!isGameOver) {
-      requestAnimationFrame(moveLaser);
-    }
-  }
-
-  // Start moving the alien laser
-  requestAnimationFrame(moveLaser);
+  }, alienShootDelay); // Aliens will try to shoot every second
 }
 
 // Start alien shooting after starting the game loop
 startAlienShooting();
+
+let lastAlienShootTime = 0; // Timestamp of the last alien shot
+let alienShootRequestId;
+
+// Function for aliens to shoot
+function alienShoot() {
+  for (let i = 0; i < numberOfShootingAliens; i++) {
+    const shootingAlienIndex = alienInvaders[Math.floor(Math.random() * alienInvaders.length)];
+    let currentLaserIndex = shootingAlienIndex;
+
+    function moveAlienLaser() {
+      if (currentLaserIndex >= squares.length) return; // Stop if the laser goes out of bounds
+
+      squares[currentLaserIndex].classList.remove("alien-laser");
+      currentLaserIndex += width; // Update the index of the laser
+
+      if (currentLaserIndex < squares.length) {
+        // Place the laser in the new index as long as its within bounds
+        squares[currentLaserIndex].classList.add("alien-laser");
+
+        // Check if the alien laser hits the shooter
+        if (squares[currentLaserIndex].classList.contains("shooter")) {
+          squares[currentLaserIndex].classList.remove("alien-laser");
+          lives--;
+          updateLives();
+
+          if (lives === 0) {
+            resultDisplay.innerHTML = "GAME OVER";
+            isGameOver = true;
+            stopTimer();
+            cancelAnimationFrame(gameRequestId);
+            cancelAnimationFrame(alienShootRequestId);
+            return;
+          }
+        }
+      }
+
+      // Continue moving the laser in the next frame
+      requestAnimationFrame(moveAlienLaser);
+    }
+
+    // Start moving the laser
+    requestAnimationFrame(moveAlienLaser);
+  }
+}
+
+// Game loop for alien shooting using requestAnimationFrame
+function alienShootingLoop(timestamp) {
+  if (isPaused || isGameOver) return; // Stop if the game is paused
+
+  // Check if it's time for the aliens to shoot
+  if (timestamp - lastAlienShootTime >= alienShootDelay) {
+    alienShoot();
+    lastAlienShootTime = timestamp; // Update the last shooting time
+  }
+
+  // Request the next frame
+  alienShootRequestId = requestAnimationFrame(alienShootingLoop);
+}
+
+// Start the alien shooting loop
+alienShootRequestId = requestAnimationFrame(alienShootingLoop);
