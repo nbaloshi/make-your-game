@@ -42,8 +42,20 @@ const livesDisplay = document.getElementById("lives");
 // Lives Related
 
 // Function to update the lives display
+// function updateLives() {
+//   livesDisplay.innerHTML = lives;
+// }
+
+// Function to update the lives display using images
 function updateLives() {
-  livesDisplay.innerHTML = lives;
+  for (let i = 1; i <= 3; i++) {
+    const lifeImage = document.getElementById(`life${i}`);
+    if (i <= lives) {
+      lifeImage.src = "../imgs/full-heart.png"; // Full heart for remaining lives
+    } else {
+      lifeImage.src = "../imgs/empty-heart.png"; // Empty heart for lost lives
+    }
+  }
 }
 
 // Start by displaying the initial lives count

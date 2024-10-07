@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../stylesheet/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     <title>Space Invaders</title>
     <meta charset="UTF-8">
 
@@ -9,15 +10,23 @@
 <body>
     <h1 class="results">0</h1>
     <div class="timer">Time: <span id="timer">0</span> seconds</div>
-    <div class="lives">Lives: <span id="lives">3</span></div>
+    <!-- <div class="lives">Lives: <span id="lives">3</span></div> -->
+    <div class="image-container">
+        <h3>Lives:</h3>
+        <img src="../imgs/full-heart.png" alt="Heart 1" class="lives" id="life1">
+        <img src="../imgs/full-heart.png" alt="Heart 2" class="lives" id="life2">
+        <img src="../imgs/full-heart.png" alt="Heart 3" class="lives" id="life3">
+    </div> 
 
     <div id="menu" class="menu hidden">
         <h2>Game Menu</h2>
         <button id="resumeButton">Resume</button>
         <button id="restartButton">Restart</button>
-      </div>
-    <div  class = "grid">
     </div>
+    
+    <div  class = "grid"></div>
+
     <script src="../script.js"></script>
+
 </body>
 </html>

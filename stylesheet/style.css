@@ -1,7 +1,7 @@
 .grid {
     width: 600px;
     height: 600px;
-    border: solid 1px black;
+    /* border: solid 1px black; */
     display: flex; /*Squeeze all the div boxes in the first line */
     flex-wrap: wrap; /*wrap the divs so it starts a new line*/
 }
@@ -15,16 +15,32 @@
 }
 
 .invader {
-    background-color: purple;
-    border-radius: 20px; /*round it */
+    /* background-color: purple;
+    border-radius: 20px; round it */
+    background-image: url("../imgs/enemy.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  width: 95%;  /* This should be the same size as the grid cell */
+  height: 95%;
 }
 
 .shooter {
-    background-color: green;
+    /* background-color: green; */
+    background-image: url("../imgs/spaceship.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: scale(1.5);  /* Adjust the scale to make the image bigger */
+    transform-origin: center; /* Keep scaling centered within the grid cell */
 }
 
 .laser{
-    background-color: orange;
+    background-color: red;
+    /* display: block; */
+    background-color: red; /* Color for the alien laser */
+    height: 10px; /* Adjust size as needed */
+    width: 150%; /* Fit the grid square */
 }
 
 .boom{
@@ -52,4 +68,73 @@
     background-color: red; /* Color for the alien laser */
     height: 10px; /* Adjust size as needed */
     width: 100%; /* Fit the grid square */
-  }
+}
+
+body {
+    background-image: url("../imgs/background.gif");
+    background-size: cover;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: #fff;
+}
+
+h1 {
+    color: #fff;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family:"Pixelify Sans", sans-serif;
+}
+
+h3 {
+  color: #fff;
+  font-size: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: "Pixelify Sans", sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    justify-content: space-between; /* Space between the title and the lives */
+    padding: 10px; /* Padding around the header */
+    width: 100%;
+    box-sizing: border-box; /* Include padding in total width */
+    margin-bottom: 10px;
+}
+
+.timer {
+    font-family: "Pixelify Sans", sans-serif ;
+    margin-right: 10px;
+    color:#fff
+}
+
+.lives {
+    width: 50px; /* Set desired width */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 5px; /* Space between images */
+}
+
+.image-container {
+  position: fixed;  /* Fixes the container at the top left */
+  top: 10px;        /* Distance from the top of the screen */
+  left: 10px;       /* Distance from the left of the screen */
+  display: flex;    /* To align the hearts horizontally */
+  align-items: center;
+  padding: 5px;     /* Add some padding for aesthetics */
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: adds a background to make it stand out */
+  border-radius: 5px;  /* Rounded corners for the container */
+}
+
+.image-container img {
+    width: 30px;    /* Adjust the size of the hearts if needed */
+    height: auto;   /* Keep the aspect ratio */
+    margin-right: 5px;  /* Spacing between hearts */
+}

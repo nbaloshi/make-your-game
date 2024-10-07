@@ -20,5 +20,10 @@ frame rate.
 
 
 - increase difficulty by adding alien shooters
-- adjust size based on screen
-- aliens move under shooter
+- if pause while shooting bullet doesnt stop
+- if its moving too fast doesnt die in alien touch so check before and after
+- add delay for shooter
+- shooting at aliens bullet stays long???
+- size of aliens and spaceship (or grid div size)
+- only shoot while focus 
+- dead aliens shoot???
