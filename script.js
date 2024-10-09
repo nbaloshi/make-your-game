@@ -87,7 +87,7 @@ resumeButton.addEventListener("click", () => {
   isPaused = false;
   requestAnimationFrame(gameLoop); // Resume the game loop
   startTimer(); // Start/resume the timer
-  startAlienShooting();
+  // startAlienShooting();
 });
 
 restartButton.addEventListener("click", () => {
@@ -107,7 +107,7 @@ document.addEventListener("keydown", (e) => {
       isPaused = false;
       requestAnimationFrame(gameLoop); // Resume the game
       startTimer(); // Resume the timer
-      startAlienShooting();
+      // startAlienShooting();
     } else {
       menu.classList.remove("hidden");
       isPaused = true;
@@ -425,10 +425,16 @@ let alienShootRequestId;
 
 // Function for aliens to shoot
 function alienShoot() {
-  console.log("aliensShooting");
+  // console.log("aliensShooting");
   for (let i = 0; i < numberOfShootingAliens; i++) {
-    const shootingAlienIndex =
-      alienInvaders[Math.floor(Math.random() * alienInvaders.length)];
+    let shootingAlienIndex;
+
+    // Ensure that the selected alien is not in aliensRemoved
+    do {
+      shootingAlienIndex =
+        alienInvaders[Math.floor(Math.random() * alienInvaders.length)];
+    } while (aliensRemoved.includes(alienInvaders.indexOf(shootingAlienIndex)));
+
     let currentLaserIndex = shootingAlienIndex;
 
     function moveAlienLaser() {
