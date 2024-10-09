@@ -1,6 +1,7 @@
 // Difficulty
 let alienShootDelay = 1000;
 let numberOfShootingAliens = 1;
+let alientShootInterval;
 
 // Query selector will get the first element it finds with the class grid
 const grid = document.querySelector(".grid");
@@ -93,9 +94,8 @@ restartButton.addEventListener("click", () => {
   secondsElapsed = 0;
   isGameOver = false;
   resetTimer(); // Reset the timer when restarting the game
-  startTimer(); // Start the timer again
   restartGame();
-  requestAnimationFrame(gameLoop); // Restart the game loop
+  startTimer(); // Start the timer again
   // startAlienShooting();
 });
 
@@ -401,9 +401,14 @@ document.addEventListener("keydown", throttledShoot);
 
 // Function to start alien shooting
 function startAlienShooting() {
-  setInterval(() => {
-    if (isPaused || isGameOver) return; // Stop shooting if paused or game over
+  if (alientShootInterval) clearInterval(alientShootInterval);
+  alientShootInterval = setInterval(() => {
+    if (isPaused) return; // Stop shooting if paused or game over
 
+    if (isGameOver) {
+      clearInterval(alientShootInterval); // Stop shooting if game over
+      return;
+    }
     const shootingAlienIndex =
       alienInvaders[Math.floor(Math.random() * alienInvaders.length)];
     if (!aliensRemoved.includes(alienInvaders.indexOf(shootingAlienIndex))) {
