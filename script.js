@@ -295,6 +295,20 @@ function moveInvaders() {
   // Draw the aliens again
   draw();
 
+  // Check if any alien is in the same row as the shooter
+  const shooterRow = Math.floor(currentShooterIndex / width);
+  const alienInSameRow = alienInvaders.some(
+    (alienIndex) => Math.floor(alienIndex / width) === shooterRow
+  );
+
+  if (alienInSameRow) {
+    console.log("Alien in the same row as the shooter!");
+    resultDisplay.innerHTML = "GAME OVER";
+    stopTimer();
+    isGameOver = true;
+    return;
+  }
+
   // Check if the shooter and invader are in the same square
   if (squares[currentShooterIndex].classList.contains("invader")) {
     lives--; // Decrease lives by 1

@@ -18,6 +18,7 @@ optimize the timing of updates, especially when the tab is
 not active or the device is struggling to keep up with the
 frame rate.
 
-- dead aliens shoot??? - requires testing
-    <!-- - if pause while shooting bullet doesnt stop -->
-    <!-- - the rain -->
+<!-- - if pause while shooting bullet doesnt stop -->
+<!-- - the rain -->
+
+- stop aliens when they reach the level of the spaceship
