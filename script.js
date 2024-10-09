@@ -39,13 +39,6 @@ const timerDisplay = document.getElementById("timer");
 let lives = 3; // Initial number of lives
 const livesDisplay = document.getElementById("lives");
 
-// Lives Related
-
-// Function to update the lives display
-// function updateLives() {
-//   livesDisplay.innerHTML = lives;
-// }
-
 // Function to update the lives display using images
 function updateLives() {
   for (let i = 1; i <= 3; i++) {
@@ -97,10 +90,13 @@ resumeButton.addEventListener("click", () => {
 });
 
 restartButton.addEventListener("click", () => {
-  restartGame();
+  secondsElapsed = 0;
+  isGameOver = false;
   resetTimer(); // Reset the timer when restarting the game
   startTimer(); // Start the timer again
-  startAlienShooting();
+  restartGame();
+  requestAnimationFrame(gameLoop); // Restart the game loop
+  // startAlienShooting();
 });
 
 document.addEventListener("keydown", (e) => {
@@ -152,6 +148,9 @@ function restartGame() {
   direction = 1;
   lives = 3; // Reset lives to 3
   numberOfShootingAliens = 1;
+  alienShootDelay = 1000;
+  // secondsElapsed = 0;
+  console.log("Seconds Elapsed", secondsElapsed);
 
   updateLives(); // Update lives display
 
@@ -159,8 +158,7 @@ function restartGame() {
   alienInvaders.length = 0; // Clear the array
 
   // prettier-ignore
-  alienInvaders.push(0,1,2,3,4,5,6,7,8,9,15,16,17,18,19,20,21,22,23,24,30,31,32,33,34,35,36,37,38,39
-);
+  alienInvaders.push(0,1,2,3,4,5,6,7,8,9,15,16,17,18,19,20,21,22,23,24,30,31,32,33,34,35,36,37,38,39);
 
   // Clear aliens and shooter from the grid
   squares.forEach((square) => {
@@ -174,9 +172,9 @@ function restartGame() {
   // Hide menu and start the game loop again
   menu.classList.add("hidden");
   isPaused = false;
-  resetTimer();
-  startTimer();
-  // startAlienShooting();
+  // resetTimer();
+  // startTimer();
+  startAlienShooting();
   requestAnimationFrame(gameLoop);
 }
 
@@ -246,7 +244,7 @@ function moveShooter(e) {
       resultDisplay.innerHTML = "GAME OVER";
       stopTimer();
       isGameOver = true;
-      removeListeners();
+      // removeListeners();
       // clearInterval(invadersID);
       // Remove the shooter
       return;
@@ -306,7 +304,7 @@ function moveInvaders() {
       resultDisplay.innerHTML = "GAME OVER";
       stopTimer();
       isGameOver = true;
-      removeListeners();
+      // removeListeners();
       // clearInterval(invadersID);
       // Remove the shooter
       return;
@@ -318,7 +316,7 @@ function moveInvaders() {
     resultDisplay.innerHTML = "YOU WIN";
     stopTimer();
     isGameOver = true;
-    removeListeners();
+    // removeListeners();
     // clearInterval(invadersID);
     return;
   }
@@ -332,11 +330,8 @@ function removeEventListeners() {
 // Start by displaying the initial lives count
 updateLives();
 
-// set an interval to move the aliens every 600ms
-// invadersID = setInterval(moveInvaders, 600);
-
 function shoot(e) {
-  if (isGameOver || isPaused) return; // Stop the game loop if the game is over
+  if (isGameOver || isPaused) return; // Stop the game loop if the game
 
   let laserId;
   let currentLaserIndex = currentShooterIndex;
@@ -362,7 +357,7 @@ function shoot(e) {
       // Remove everything within 3ms
       setTimeout(
         () => squares[currentLaserIndex].classList.remove("boom"),
-        300
+        100
       );
       clearInterval(laserId);
 
@@ -387,8 +382,22 @@ function shoot(e) {
   }
 }
 
+// Throttle function to limit how often a function can be called
+function throttle(func, limit) {
+  let inThrottle;
+  return function (...args) {
+    if (!inThrottle) {
+      func.apply(this, args); // Call the function
+      inThrottle = true; // Block further calls
+      setTimeout(() => (inThrottle = false), limit); // Reset after the limit
+    }
+  };
+}
+
+const throttledShoot = throttle(shoot, 500);
+
 document.addEventListener("keydown", moveShooter);
-document.addEventListener("keydown", shoot);
+document.addEventListener("keydown", throttledShoot);
 
 // Function to start alien shooting
 function startAlienShooting() {
@@ -437,8 +446,8 @@ function alienShoot() {
             resultDisplay.innerHTML = "GAME OVER";
             isGameOver = true;
             stopTimer();
-            cancelAnimationFrame(gameRequestId);
-            cancelAnimationFrame(alienShootRequestId);
+            // cancelAnimationFrame(gameRequestId);
+            // cancelAnimationFrame(alienShootRequestId);
             return;
           }
         }
