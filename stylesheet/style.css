@@ -36,7 +36,6 @@
 }
 
 .laser{
-    background-color: red;
     /* display: block; */
     background-color: red; /* Color for the alien laser */
     height: 10px; /* Adjust size as needed */
@@ -67,7 +66,7 @@
 .alien-laser {
     background-color: red; /* Color for the alien laser */
     height: 10px; /* Adjust size as needed */
-    width: 100%; /* Fit the grid square */
+    width: 1px; /* Fit the grid square */
 }
 
 body {
