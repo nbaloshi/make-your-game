@@ -295,14 +295,17 @@ function moveInvaders() {
   // Draw the aliens again
   draw();
 
-  // Check if any alien is in the same row as the shooter
+  // Check if there are any active (non-removed) aliens in the same row as the shooter
   const shooterRow = Math.floor(currentShooterIndex / width);
-  const alienInSameRow = alienInvaders.some(
-    (alienIndex) => Math.floor(alienIndex / width) === shooterRow
+  const activeAliensInSameRow = alienInvaders.filter(
+    (_, i) =>
+      !aliensRemoved.includes(i) && // Check if alien is not removed using index i
+      Math.floor(alienInvaders[i] / width) === shooterRow // Check if alien is in the same row as the shooter
   );
 
-  if (alienInSameRow) {
-    console.log("Alien in the same row as the shooter!");
+  // Stop the game if there's any active alien in the same row as the shooter
+  if (activeAliensInSameRow.length > 0) {
+    console.log("Active alien in the same row as the shooter!");
     resultDisplay.innerHTML = "GAME OVER";
     stopTimer();
     isGameOver = true;
@@ -318,9 +321,6 @@ function moveInvaders() {
       resultDisplay.innerHTML = "GAME OVER";
       stopTimer();
       isGameOver = true;
-      // removeListeners();
-      // clearInterval(invadersID);
-      // Remove the shooter
       return;
     }
   }
@@ -330,8 +330,6 @@ function moveInvaders() {
     resultDisplay.innerHTML = "YOU WIN";
     stopTimer();
     isGameOver = true;
-    // removeListeners();
-    // clearInterval(invadersID);
     return;
   }
 }
@@ -380,7 +378,8 @@ function shoot(e) {
       aliensRemoved.push(alienRemoved);
 
       results++;
-      resultDisplay.innerHTML = results;
+      if (resultDisplay.innerHTML != "GAME OVER")
+        resultDisplay.innerHTML = results;
 
       return;
       // console.log(aliensRemoved)
