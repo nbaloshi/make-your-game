@@ -17,8 +17,3 @@ than using setInterval because it allows the browser to
 optimize the timing of updates, especially when the tab is
 not active or the device is struggling to keep up with the
 frame rate.
-
-<!-- - if pause while shooting bullet doesnt stop -->
-<!-- - the rain -->
-
-- stop aliens when they reach the level of the spaceship (deadaliens location is where it stops )

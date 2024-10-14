@@ -24,7 +24,7 @@ let lastMoveTime = 0;
 const moveInterval = 600;
 
 // Menu Related
-let isPaused = false;
+let isPaused = true;
 let gameRequestId; // To store the requestAnimationFrame ID
 
 const menu = document.getElementById("menu");
@@ -44,11 +44,8 @@ const livesDisplay = document.getElementById("lives");
 function updateLives() {
   for (let i = 1; i <= 3; i++) {
     const lifeImage = document.getElementById(`life${i}`);
-    if (i <= lives) {
-      lifeImage.src = "../imgs/full-heart.png"; // Full heart for remaining lives
-    } else {
-      lifeImage.src = "../imgs/empty-heart.png"; // Empty heart for lost lives
-    }
+    lifeImage.src =
+      i <= lives ? "../imgs/full-heart.png" : "../imgs/empty-heart.png";
   }
 }
 
@@ -178,10 +175,22 @@ function restartGame() {
   requestAnimationFrame(gameLoop);
 }
 
-startTimer();
+function startGame() {
+  startTimer();
 
-// Start the game loop
-requestAnimationFrame(gameLoop);
+  // Start the game loop
+  requestAnimationFrame(gameLoop);
+
+  // Start the alien shooting loop
+  alienShootRequestId = requestAnimationFrame(alienShootingLoop);
+
+  document.addEventListener("keydown", moveShooter);
+
+  isPaused = false;
+
+  var x = document.getElementById("startButton");
+  x.parentNode.removeChild(x);
+}
 
 // Create the grid and add the squares
 for (let i = 0; i < width * width; i++) {
@@ -254,8 +263,6 @@ function moveShooter(e) {
   squares[currentShooterIndex].classList.add("shooter");
 }
 
-document.addEventListener("keydown", moveShooter);
-
 function moveInvaders() {
   if (isGameOver) return; // Stop the game loop if the game is over
   const leftEdge = alienInvaders[0] % width == 0;
@@ -308,6 +315,8 @@ function moveInvaders() {
     console.log("Active alien in the same row as the shooter!");
     resultDisplay.innerHTML = "GAME OVER";
     stopTimer();
+    lives = 0;
+    updateLives();
     isGameOver = true;
     return;
   }
@@ -332,11 +341,6 @@ function moveInvaders() {
     isGameOver = true;
     return;
   }
-}
-
-function removeEventListeners() {
-  document.removeEventListener("keydown", moveShooter);
-  document.removeEventListener("keydown", shoot);
 }
 
 // Start by displaying the initial lives count
@@ -388,7 +392,7 @@ function shoot(e) {
     requestAnimationFrame(moveLaser);
   }
 
-  if (e.key == "ArrowUp") {
+  if (e.key == "ArrowUp" || e.key == " ") {
     // Assign and clear so that the laser should be removed after being shot
     // laserId = setInterval(moveLaser, 100);
     requestAnimationFrame(moveLaser);
@@ -429,9 +433,6 @@ function startAlienShooting() {
     }
   }, alienShootDelay); // Aliens will try to shoot every second
 }
-
-// Start alien shooting after starting the game loop
-// startAlienShooting();
 
 let lastAlienShootTime = 0; // Timestamp of the last alien shot
 let alienShootRequestId;
@@ -499,6 +500,3 @@ function alienShootingLoop(timestamp) {
   // Request the next frame
   alienShootRequestId = requestAnimationFrame(alienShootingLoop);
 }
-
-// Start the alien shooting loop
-alienShootRequestId = requestAnimationFrame(alienShootingLoop);

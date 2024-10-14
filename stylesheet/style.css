@@ -5,6 +5,7 @@
   display: flex; /*Squeeze all the div boxes in the first line */
   flex-wrap: wrap; /*wrap the divs so it starts a new line*/
   background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
 }
 
 .grid div {
@@ -63,6 +64,7 @@
   padding: 20px;
   border-radius: 10px;
   z-index: 1000;
+  font-family: "Pixelify Sans", sans-serif;
 }
 
 .hidden {
@@ -147,4 +149,16 @@ h3 {
   width: 30px; /* Adjust the size of the hearts if needed */
   height: auto; /* Keep the aspect ratio */
   margin-right: 5px; /* Spacing between hearts */
+}
+
+button {
+  background-color: #04aa6d; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Pixelify Sans", sans-serif;
 }
