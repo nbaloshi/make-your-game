@@ -25,6 +25,7 @@ const moveInterval = 600;
 
 // Menu Related
 let isPaused = true;
+let start = false
 let gameRequestId; // To store the requestAnimationFrame ID
 
 const menu = document.getElementById("menu");
@@ -97,21 +98,24 @@ restartButton.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    // Toggle pause and show/hide menu
-    if (isPaused) {
-      menu.classList.add("hidden");
-      isPaused = false;
-      requestAnimationFrame(gameLoop); // Resume the game
-      startTimer(); // Resume the timer
-      // startAlienShooting();
-    } else {
-      menu.classList.remove("hidden");
-      isPaused = true;
-      stopTimer(); // Pause the timer
-      // removeEventListeners();
+  if(start){
+    if (e.key === "Escape") {
+      // Toggle pause and show/hide menu
+      if (isPaused) {
+        menu.classList.add("hidden");
+        isPaused = false;
+        requestAnimationFrame(gameLoop); // Resume the game
+        startTimer(); // Resume the timer
+        startAlienShooting();
+      } else {
+        menu.classList.remove("hidden");
+        isPaused = true;
+        stopTimer(); // Pause the timer
+        // removeEventListeners();
+      }
     }
   }
+  
 });
 
 // Only move the invaders if enough time has passed
@@ -187,6 +191,7 @@ function startGame() {
   document.addEventListener("keydown", moveShooter);
 
   isPaused = false;
+  start = true
 
   var x = document.getElementById("startButton");
   x.parentNode.removeChild(x);
