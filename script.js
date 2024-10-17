@@ -429,7 +429,7 @@ function startAlienShooting() {
 
     if (isGameOver) {
       clearInterval(alientShootInterval); // Stop shooting if game over
-      return;
+      return; 
     }
     const shootingAlienIndex =
       alienInvaders[Math.floor(Math.random() * alienInvaders.length)];
