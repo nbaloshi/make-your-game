@@ -46,7 +46,7 @@ function updateLives() {
   for (let i = 1; i <= 3; i++) {
     const lifeImage = document.getElementById(`life${i}`);
     lifeImage.src =
-      i <= lives ? "../imgs/full-heart.png" : "../imgs/empty-heart.png";
+      i <= lives ? "imgs/full-heart.png" : "imgs/empty-heart.png";
   }
 }
 
