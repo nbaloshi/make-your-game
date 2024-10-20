@@ -78,7 +78,8 @@
 }
 
 body {
-  background-image: url("../imgs/background.gif");
+  /* background-image: url("../imgs/background.jpg"); */
+  background-color: black;
   background-size: cover;
   height: 100vh;
   background-position: center;

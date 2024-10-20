@@ -45,8 +45,7 @@ const livesDisplay = document.getElementById("lives");
 function updateLives() {
   for (let i = 1; i <= 3; i++) {
     const lifeImage = document.getElementById(`life${i}`);
-    lifeImage.src =
-      i <= lives ? "imgs/full-heart.png" : "imgs/empty-heart.png";
+    lifeImage.src = i <= lives ? "imgs/full-heart.png" : "imgs/empty-heart.png";
   }
 }
 
@@ -106,7 +105,7 @@ document.addEventListener("keydown", (e) => {
         isPaused = false;
         requestAnimationFrame(gameLoop); // Resume the game
         startTimer(); // Resume the timer
-        startAlienShooting();
+        requestAnimationFrame(startAlienShooting);
       } else {
         menu.classList.remove("hidden");
         isPaused = true;
@@ -429,7 +428,7 @@ function startAlienShooting() {
 
     if (isGameOver) {
       clearInterval(alientShootInterval); // Stop shooting if game over
-      return; 
+      return;
     }
     const shootingAlienIndex =
       alienInvaders[Math.floor(Math.random() * alienInvaders.length)];
